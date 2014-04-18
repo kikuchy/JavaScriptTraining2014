@@ -2,13 +2,13 @@
 window.onload = function() {
 
     // 自分のhostnameに変更する
-    var path = "http://HOSTNAME:PORT/result/";
+    var path = "http://localhost:8000/result/";
 
     // xhrの準備
-    @@@@
-    @@@@
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = drawResult;
 
-    var select = document.getElementById(@@@@);
+    var select = document.getElementById("bloodTypeBox");
     select.onchange = function() {
         // 選択された値を取得する
         var selectedOption = this.options[ this.selectedIndex ];
@@ -17,17 +17,17 @@ window.onload = function() {
 
         if (selectedBloodType !== "default") {
             // urlを作成し、xhrでtxtファイルを取得する
-            var url = path + "type-" + @@@@ + ".txt";
-            @@@@
-            @@@@
+            var url = path + "type-" + selectedBloodType + ".txt";
+			xhr.open("get", url);
+			xhr.send();
         }
     }
 
     function drawResult() {
         if((xhr.readyState === 4) && (xhr.status === 200)) {
             //alert(xhr.responseText);
-            var resultArea = document.getElementById(@@@@);
-            resultArea.textContent = @@@@;
+            var resultArea = document.getElementById("resultArea");
+            resultArea.textContent = xhr.responseText;
         }
     }
 }
